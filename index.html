@@ -1,8 +1,34 @@
-<form id="afrekenForm">
-  <label for="aantalDrankjes">Aantal drankjes:</label>
-  <input type="number" id="aantalDrankjes" min="0">
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Verkrijg de waarde van het aantal drankjes
+  $aantalDrankjes = $_POST['aantalDrankjes'];
 
-  <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
+  // Bereken het totaalbedrag
+  $prijsPerDrankje = 2.50; // Vervang met de werkelijke prijs per drankje
+  $totaalBedrag = $aantalDrankjes * $prijsPerDrankje;
 
-  <button type="submit">Afrekenen</button>
-</form>
+  // Maak de URL met het totaalbedrag
+  $afrekenURL = 'https://bunq.me/BlauweSteenPilsEnzo/' . $totaalBedrag;
+
+  // Navigeer naar de afrekenURL
+  header("Location: $afrekenURL");
+  exit();
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Afreken Systeem</title>
+</head>
+<body>
+  <form method="post">
+    <label for="aantalDrankjes">Aantal drankjes:</label>
+    <input type="number" id="aantalDrankjes" name="aantalDrankjes" min="0" required>
+
+    <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
+
+    <button type="submit">Afrekenen</button>
+  </form>
+</body>
+</html>
