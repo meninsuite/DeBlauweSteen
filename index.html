@@ -2,11 +2,30 @@
 <html>
 <head>
   <title>Afreken Systeem</title>
+  <style>
+    .quantity-control {
+      display: flex;
+      align-items: center;
+    }
+    .quantity-control button {
+      padding: 5px 10px;
+    }
+    .quantity-value {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <form id="afrekenForm">
-    <label for="aantalDrankjes">Aantal drankjes:</label>
-    <input type="number" id="aantalDrankjes" min="0">
+    <div class="quantity-control">
+      <label for="aantalDrankjes">Aantal drankjes:</label>
+      <div>
+        <button type="button" id="decrementBtn">-</button>
+        <span id="aantalDrankjes" class="quantity-value">0</span>
+        <button type="button" id="incrementBtn">+</button>
+      </div>
+    </div>
 
     <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
 
@@ -14,14 +33,30 @@
   </form>
 
   <script>
+    var aantalDrankjesInput = document.getElementById('aantalDrankjes');
+    var decrementBtn = document.getElementById('decrementBtn');
+    var incrementBtn = document.getElementById('incrementBtn');
+
+    decrementBtn.addEventListener('click', function() {
+      var currentValue = parseInt(aantalDrankjesInput.innerText);
+      if (currentValue > 0) {
+        aantalDrankjesInput.innerText = currentValue - 1;
+      }
+    });
+
+    incrementBtn.addEventListener('click', function() {
+      var currentValue = parseInt(aantalDrankjesInput.innerText);
+      aantalDrankjesInput.innerText = currentValue + 1;
+    });
+
     document.getElementById('afrekenForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Voorkom het verzenden van het formulier
 
       // Verkrijg de waarde van het aantal drankjes
-      var aantalDrankjes = parseInt(document.getElementById('aantalDrankjes').value);
+      var aantalDrankjes = parseInt(aantalDrankjesInput.innerText);
 
       // Bereken het totaalbedrag
-      var prijsPerDrankje = 1; // Vervang met de werkelijke prijs per drankje
+      var prijsPerDrankje = 2.50; // Vervang met de werkelijke prijs per drankje
       var totaalBedrag = aantalDrankjes * prijsPerDrankje;
 
       // Maak de URL met het totaalbedrag
