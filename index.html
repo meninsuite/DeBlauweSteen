@@ -83,7 +83,13 @@
         </div>
       </div>
 
-      <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
+      <div class="quantity-control">
+        <label></label>
+        <div class="quantity-buttons">
+          <button type="button" id="increaseBy5Btn">+5</button>
+          <button type="button" id="increaseBy10Btn">+10</button>
+        </div>
+      </div>
 
       <div class="total-amount">Totaalbedrag: <span id="totaalBedrag">0</span></div>
 
@@ -95,6 +101,8 @@
     var aantalDrankjesInput = document.getElementById('aantalDrankjes');
     var decrementBtn = document.getElementById('decrementBtn');
     var incrementBtn = document.getElementById('incrementBtn');
+    var increaseBy5Btn = document.getElementById('increaseBy5Btn');
+    var increaseBy10Btn = document.getElementById('increaseBy10Btn');
     var totaalBedragOutput = document.getElementById('totaalBedrag');
 
     decrementBtn.addEventListener('click', function() {
@@ -108,6 +116,18 @@
     incrementBtn.addEventListener('click', function() {
       var currentValue = parseInt(aantalDrankjesInput.value);
       aantalDrankjesInput.value = currentValue + 1;
+      updateTotaalBedrag();
+    });
+
+    increaseBy5Btn.addEventListener('click', function() {
+      var currentValue = parseInt(aantalDrankjesInput.value);
+      aantalDrankjesInput.value = currentValue + 5;
+      updateTotaalBedrag();
+    });
+
+    increaseBy10Btn.addEventListener('click', function() {
+      var currentValue = parseInt(aantalDrankjesInput.value);
+      aantalDrankjesInput.value = currentValue + 10;
       updateTotaalBedrag();
     });
 
