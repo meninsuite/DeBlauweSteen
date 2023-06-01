@@ -2,11 +2,32 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afreken Systeem</title>
+  <title>CV de Blauwe Steen</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #eaeff5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      border: 1px solid #ccc;
       padding: 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
     }
 
     .quantity-control {
@@ -48,22 +69,27 @@
   </style>
 </head>
 <body>
-  <form id="afrekenForm">
-    <div class="quantity-control">
-      <label for="aantalDrankjes">Aantal drankjes:</label>
-      <div class="quantity-buttons">
-        <button type="button" id="decrementBtn">-</button>
-        <input type="number" id="aantalDrankjes" min="0" value="0">
-        <button type="button" id="incrementBtn">+</button>
+  <div class="container">
+    <h1>CV de Blauwe Steen</h1>
+    <p>DrankKas</p>
+
+    <form id="afrekenForm">
+      <div class="quantity-control">
+        <label for="aantalDrankjes">Aantal drankjes:</label>
+        <div class="quantity-buttons">
+          <button type="button" id="decrementBtn">-</button>
+          <input type="number" id="aantalDrankjes" min="0" value="0">
+          <button type="button" id="incrementBtn">+</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
+      <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
 
-    <div class="total-amount">Totaalbedrag: <span id="totaalBedrag">0</span></div>
+      <div class="total-amount">Totaalbedrag: <span id="totaalBedrag">0</span></div>
 
-    <button type="submit" class="submit-button">Afrekenen</button>
-  </form>
+      <button type="submit" class="submit-button">Afrekenen</button>
+    </form>
+  </div>
 
   <script>
     var aantalDrankjesInput = document.getElementById('aantalDrankjes');
