@@ -23,6 +23,7 @@
     h1 {
       font-size: 24px;
       margin-bottom: 10px;
+      color: blue;
     }
 
     p {
@@ -30,30 +31,31 @@
       margin-bottom: 20px;
     }
 
-    .quantity-control {
+    .product-control {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
     }
 
-    .quantity-control label {
+    .product-control label {
       flex: 1;
       margin-right: 10px;
     }
 
-    .quantity-control input {
+    .product-control input {
       flex: 2;
       padding: 5px;
     }
 
-    .quantity-buttons {
+    .product-buttons {
       display: flex;
     }
 
-    .quantity-buttons button {
-      flex: 1;
+    .product-buttons button {
       padding: 10px;
       font-size: 16px;
+      flex: 1;
+      margin-right: 5px;
     }
 
     .total-amount {
@@ -71,75 +73,115 @@
 <body>
   <div class="container">
     <h1>CV de Blauwe Steen</h1>
-    <p>DrankKas</p>
+    <p>Online afrekenen :)</p>
 
     <form id="afrekenForm">
-      <div class="quantity-control">
-        <label for="aantalDrankjes">Aantal drankjes:</label>
-        <div class="quantity-buttons">
-          <button type="button" id="decrementBtn">-</button>
-          <input type="number" id="aantalDrankjes" min="0" value="0">
-          <button type="button" id="incrementBtn">+</button>
-        </div>
-      </div>
+      <div id="productControls"></div>
 
-      <div class="quantity-control">
-        <label></label>
-        <div class="quantity-buttons">
-          <button type="button" id="increaseBy5Btn">+5</button>
-          <button type="button" id="increaseBy10Btn">+10</button>
-        </div>
-      </div>
-
-      <div class="total-amount">Totaalbedrag: <span id="totaalBedrag">0</span></div>
+      <div class="total-amount">Totaalbedrag: € <span id="totaalBedrag">0</span></div>
 
       <button type="submit" class="submit-button">Afrekenen</button>
     </form>
   </div>
 
   <script>
-    var aantalDrankjesInput = document.getElementById('aantalDrankjes');
-    var decrementBtn = document.getElementById('decrementBtn');
-    var incrementBtn = document.getElementById('incrementBtn');
-    var increaseBy5Btn = document.getElementById('increaseBy5Btn');
-    var increaseBy10Btn = document.getElementById('increaseBy10Btn');
+    var products = [
+      { name: 'Bier', price: 1 },
+      { name: 'Fris', price: 1 },
+      { name: 'Fles wijn', price: 8 },
+      { name: 'Kratje bier', price: 24 }
+    ];
+
+    var productControls = document.getElementById('productControls');
     var totaalBedragOutput = document.getElementById('totaalBedrag');
 
-    decrementBtn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.value);
+    products.forEach(function(product) {
+      var productControl = document.createElement('div');
+      productControl.className = 'product-control';
+
+      var label = document.createElement('label');
+      label.setAttribute('for', 'aantal' + product.name.replace(/\s/g, ''));
+      label.textContent = product.name + ':';
+      productControl.appendChild(label);
+
+      var buttonsDiv = document.createElement('div');
+      buttonsDiv.className = 'product-buttons';
+      productControl.appendChild(buttonsDiv);
+
+      var decrementBtn = createButton('-', function() {
+        decrementAmount(product.name);
+      });
+      buttonsDiv.appendChild(decrementBtn);
+
+      var input = document.createElement('input');
+      input.type = 'number';
+      input.id = 'aantal' + product.name.replace(/\s/g, '');
+      input.min = '0';
+      input.value = '0';
+      input.addEventListener('input', updateTotaalBedrag);
+      productControl.appendChild(input);
+
+      var incrementBtn = createButton('+1', function() {
+        incrementAmount(product.name, 1);
+      });
+      buttonsDiv.appendChild(incrementBtn);
+
+      var increaseBy5Btn = createButton('+5', function() {
+        incrementAmount(product.name, 5);
+      });
+      buttonsDiv.appendChild(increaseBy5Btn);
+
+      var increaseBy10Btn = createButton('+10', function() {
+        incrementAmount(product.name, 10);
+      });
+      buttonsDiv.appendChild(increaseBy10Btn);
+
+      productControls.appendChild(productControl);
+    });
+
+    function createButton(label, onClick) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      button.addEventListener('click', onClick);
+      return button;
+    }
+
+    function decrementAmount(productName) {
+      var input = document.getElementById('aantal' + productName.replace(/\s/g, ''));
+      var currentValue = parseInt(input.value);
       if (currentValue > 0) {
-        aantalDrankjesInput.value = currentValue - 1;
+        input.value = currentValue - 1;
         updateTotaalBedrag();
       }
-    });
+    }
 
-    incrementBtn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.value);
-      aantalDrankjesInput.value = currentValue + 1;
+    function incrementAmount(productName, amount) {
+      var input = document.getElementById('aantal' + productName.replace(/\s/g, ''));
+      var currentValue = parseInt(input.value);
+      input.value = currentValue + amount;
       updateTotaalBedrag();
-    });
+    }
 
-    increaseBy5Btn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.value);
-      aantalDrankjesInput.value = currentValue + 5;
-      updateTotaalBedrag();
-    });
+    function updateTotaalBedrag() {
+      var totaalBedrag = products.reduce(function(total, product) {
+        var input = document.getElementById('aantal' + product.name.replace(/\s/g, ''));
+        var amount = parseInt(input.value) || 0;
+        return total + amount * product.price;
+      }, 0);
 
-    increaseBy10Btn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.value);
-      aantalDrankjesInput.value = currentValue + 10;
-      updateTotaalBedrag();
-    });
+      totaalBedragOutput.textContent = totaalBedrag;
+    }
 
     document.getElementById('afrekenForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Voorkom het verzenden van het formulier
 
-      // Verkrijg de waarde van het aantal drankjes
-      var aantalDrankjes = parseInt(aantalDrankjesInput.value);
-
       // Bereken het totaalbedrag
-      var prijsPerDrankje = 1; // Vervang met de werkelijke prijs per drankje
-      var totaalBedrag = aantalDrankjes * prijsPerDrankje;
+      var totaalBedrag = products.reduce(function(total, product) {
+        var input = document.getElementById('aantal' + product.name.replace(/\s/g, ''));
+        var amount = parseInt(input.value) || 0;
+        return total + amount * product.price;
+      }, 0);
 
       // Maak de URL met het totaalbedrag
       var afrekenURL = 'https://bunq.me/BlauweSteenPilsEnzo/' + totaalBedrag;
@@ -147,13 +189,6 @@
       // Navigeer naar de afrekenURL
       window.location.href = afrekenURL;
     });
-
-    function updateTotaalBedrag() {
-      var aantalDrankjes = parseInt(aantalDrankjesInput.value);
-      var prijsPerDrankje = 1; // Vervang met de werkelijke prijs per drankje
-      var totaalBedrag = aantalDrankjes * prijsPerDrankje;
-      totaalBedragOutput.innerText = totaalBedrag;
-    }
   </script>
 </body>
 </html>
