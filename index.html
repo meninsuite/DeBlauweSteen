@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Afreken Systeem</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
     .quantity-control {
       display: flex;
       align-items: center;
+      margin-bottom: 10px;
     }
-    .quantity-control button {
-      padding: 5px 10px;
+
+    .quantity-control label {
+      flex: 1;
+      margin-right: 10px;
     }
-    .quantity-value {
-      margin: 0 10px;
+
+    .quantity-control input {
+      flex: 2;
+      padding: 5px;
+    }
+
+    .quantity-buttons {
+      display: flex;
+    }
+
+    .quantity-buttons button {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .total-amount {
+      margin-top: 20px;
       font-size: 18px;
+    }
+
+    .submit-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -20,40 +51,45 @@
   <form id="afrekenForm">
     <div class="quantity-control">
       <label for="aantalDrankjes">Aantal drankjes:</label>
-      <div>
+      <div class="quantity-buttons">
         <button type="button" id="decrementBtn">-</button>
-        <span id="aantalDrankjes" class="quantity-value">0</span>
+        <input type="number" id="aantalDrankjes" min="0" value="0">
         <button type="button" id="incrementBtn">+</button>
       </div>
     </div>
 
     <!-- Voeg hier eventueel andere invoervelden toe voor andere consumpties -->
 
-    <button type="submit">Afrekenen</button>
+    <div class="total-amount">Totaalbedrag: <span id="totaalBedrag">0</span></div>
+
+    <button type="submit" class="submit-button">Afrekenen</button>
   </form>
 
   <script>
     var aantalDrankjesInput = document.getElementById('aantalDrankjes');
     var decrementBtn = document.getElementById('decrementBtn');
     var incrementBtn = document.getElementById('incrementBtn');
+    var totaalBedragOutput = document.getElementById('totaalBedrag');
 
     decrementBtn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.innerText);
+      var currentValue = parseInt(aantalDrankjesInput.value);
       if (currentValue > 0) {
-        aantalDrankjesInput.innerText = currentValue - 1;
+        aantalDrankjesInput.value = currentValue - 1;
+        updateTotaalBedrag();
       }
     });
 
     incrementBtn.addEventListener('click', function() {
-      var currentValue = parseInt(aantalDrankjesInput.innerText);
-      aantalDrankjesInput.innerText = currentValue + 1;
+      var currentValue = parseInt(aantalDrankjesInput.value);
+      aantalDrankjesInput.value = currentValue + 1;
+      updateTotaalBedrag();
     });
 
     document.getElementById('afrekenForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Voorkom het verzenden van het formulier
 
       // Verkrijg de waarde van het aantal drankjes
-      var aantalDrankjes = parseInt(aantalDrankjesInput.innerText);
+      var aantalDrankjes = parseInt(aantalDrankjesInput.value);
 
       // Bereken het totaalbedrag
       var prijsPerDrankje = 1; // Vervang met de werkelijke prijs per drankje
@@ -65,6 +101,13 @@
       // Navigeer naar de afrekenURL
       window.location.href = afrekenURL;
     });
+
+    function updateTotaalBedrag() {
+      var aantalDrankjes = parseInt(aantalDrankjesInput.value);
+      var prijsPerDrankje = 1; // Vervang met de werkelijke prijs per drankje
+      var totaalBedrag = aantalDrankjes * prijsPerDrankje;
+      totaalBedragOutput.innerText = totaalBedrag;
+    }
   </script>
 </body>
 </html>
