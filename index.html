@@ -3,79 +3,22 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV de Blauwe Steen</title>
-  <style>
-    /* CSS-stijlen blijven ongewijzigd */
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <!-- Rest van de HTML blijft ongewijzigd -->
+    <h1>CV de Blauwe Steen</h1>
+    <p>Online afrekenen :)</p>
+
+    <form id="afrekenForm">
+      <div id="productControls"></div>
+
+      <div class="total-amount">Totaalbedrag: € <span id="totaalBedrag">0</span></div>
+
+      <button type="submit" class="submit-button">Afrekenen</button>
+    </form>
   </div>
 
-  <script>
-    var products = [
-      { name: 'Bier', price: 1 },
-      { name: 'Fris', price: 1 },
-      { name: 'Fles wijn', price: 8 },
-      { name: 'Kratje bier', price: 24 }
-    ];
-
-    var productControls = document.getElementById('productControls');
-    var totaalBedragOutput = document.getElementById('totaalBedrag');
-
-    products.forEach(function(product) {
-      var productControl = document.createElement('div');
-      productControl.className = 'product-control';
-
-      var label = document.createElement('label');
-      label.setAttribute('for', 'aantal' + product.name.replace(/\s/g, ''));
-      label.textContent = product.name + ':';
-      productControl.appendChild(label);
-
-      var buttonsDiv = document.createElement('div');
-      buttonsDiv.className = 'product-buttons';
-      productControl.appendChild(buttonsDiv);
-
-      var increaseBy10Btn = createButton('+10', function() {
-        incrementAmount(product.name, 10);
-      });
-      buttonsDiv.appendChild(increaseBy10Btn);
-
-      var increaseBy5Btn = createButton('+5', function() {
-        incrementAmount(product.name, 5);
-      });
-      buttonsDiv.appendChild(increaseBy5Btn);
-
-      var incrementBtn = createButton('+1', function() {
-        incrementAmount(product.name, 1);
-      });
-      buttonsDiv.appendChild(incrementBtn);
-
-      var decrementBtn = createButton('-', function() {
-        decrementAmount(product.name);
-      });
-      buttonsDiv.appendChild(decrementBtn);
-
-      var input = document.createElement('input');
-      input.type = 'number';
-      input.id = 'aantal' + product.name.replace(/\s/g, '');
-      input.min = '0';
-      input.value = '0';
-      input.addEventListener('input', updateTotaalBedrag);
-      productControl.appendChild(input);
-
-      productControls.appendChild(productControl);
-    });
-
-    function createButton(label, onClick) {
-      var button = document.createElement('button');
-      button.type = 'button';
-      button.textContent = label;
-      button.addEventListener('click', onClick);
-      return button;
-    }
-
-    // Rest van de JavaScript-code blijft ongewijzigd
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #777;
+}
+
+.product-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.product-control label {
+  flex: 1;
+  margin-right: 10px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+.product-control input {
+  flex: 2;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.product-buttons {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.product-buttons button {
+  padding: 10px;
+  font-size: 16px;
+  margin-left: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-buttons button:first-child {
+  margin-left: 0;
+}
+
+.product-buttons button:hover {
+  background-color: #45a049;
+}
+
+.total-amount {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.submit-button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #2196f3;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-button:hover {
+  background-color: #0c7cd5;
+}
